@@ -1,0 +1,271 @@
+/* 기본 : 여백 없애고 스크롤 생기지 않게 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #0b1a12;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  color: #ffffff;
+}
+
+/* 포스터 : 브라우저 전체 화면 */
+.poster {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  user-select: none; /* 여러 번 클릭할 때 글씨가 파랗게 선택되지 않게 */
+}
+
+/* ---------- 텍스트 ---------- */
+
+/* 텍스트 공통 : 절대 위치 */
+.title,
+.subtitle,
+.extra,
+.desc,
+.info {
+  position: absolute;
+}
+
+/* 제목 : 왼쪽 위, 가장 크게 (vw : 화면 너비에 맞춰 크기가 바뀜) */
+.title {
+  top: 7vh;
+  left: 5vw;
+  font-size: 5vw;
+  font-weight: bold;
+  line-height: 1;
+  letter-spacing: 0.2vw;
+  transition: text-shadow 1.5s; /* 빛이 번질 때 천천히 */
+}
+
+/* 부제 : 제목 아래 */
+.subtitle {
+  top: calc(7vh + 11vw);
+  left: 5vw;
+  font-size: 1.4vw;
+  letter-spacing: 0.1vw;
+  opacity: 0.8;
+}
+
+/* 추가 문구 : 오른쪽 위, 작게 */
+.extra {
+  top: 7vh;
+  right: 5vw;
+  font-size: 0.8vw;
+  letter-spacing: 0.15vw;
+  opacity: 0.6;
+}
+
+/* 설명 : 왼쪽 아래 */
+.desc {
+  bottom: 7vh;
+  left: 5vw;
+  width: 25vw;
+  font-size: 0.9vw;
+  line-height: 1.6;
+  opacity: 0.7;
+}
+
+/* 행사 정보 : 오른쪽 아래, 오른쪽 정렬 */
+.info {
+  bottom: 7vh;
+  right: 5vw;
+  font-size: 0.9vw;
+  line-height: 1.6;
+  text-align: right;
+}
+
+/* 날짜 : 정보 중 가장 크게 */
+.date {
+  font-size: 1.6vw;
+  font-weight: bold;
+}
+
+/* 주최 : 위와 간격 두고 흐리게 */
+.organizer {
+  margin-top: 1vh;
+  opacity: 0.6;
+}
+
+/* ---------- 반딧불이 ---------- */
+
+/* 바깥 : 화면을 돌아다니거나 마우스로 모여듦 (left, top이 transition으로 천천히 바뀜) */
+.firefly-gather {
+  position: absolute;
+  transition-property: left, top;
+  transition-timing-function: ease-in-out; /* 천천히 출발 → 천천히 도착 : 갑자기 빨라지지 않게 */
+}
+
+/* 처음 자리 · 돌아다니는 속도를 하나씩 다르게 → 제각각 떠도는 느낌 */
+.g1 {
+  left: 35%;
+  top: 40%;
+  transition-duration: 5s;
+}
+.g2 {
+  left: 50%;
+  top: 30%;
+  transition-duration: 5.5s;
+}
+.g3 {
+  left: 62%;
+  top: 45%;
+  transition-duration: 6s;
+}
+.g4 {
+  left: 45%;
+  top: 60%;
+  transition-duration: 6.5s;
+}
+.g5 {
+  left: 58%;
+  top: 62%;
+  transition-duration: 7s;
+}
+
+/* 가운데 : 위아래 + 좌우로 떠다님 */
+.firefly-float {
+  animation-name: float;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+/* 떠다니는 시간을 다르게 + 음수 delay로 처음부터 박자가 어긋나게 */
+.f1 {
+  animation-duration: 6s;
+  animation-delay: -1s;
+}
+.f2 {
+  animation-duration: 6.8s;
+  animation-delay: -3s;
+}
+.f3 {
+  animation-duration: 7.5s;
+  animation-delay: -2s;
+}
+.f4 {
+  animation-duration: 8.2s;
+  animation-delay: -5s;
+}
+.f5 {
+  animation-duration: 9s;
+  animation-delay: -4s;
+}
+
+/* 안쪽 : 동그란 빛, 깜빡임 */
+.firefly {
+  border-radius: 50%;
+  background-color: #f4e27a;
+  filter: blur(4px);
+  mix-blend-mode: screen;
+  animation-name: blink;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  /* 합쳐지고 나뉠 때 크기 · 번짐이 1.7초 동안 부드럽게 바뀜 */
+  transition: width 1.7s ease-in-out, height 1.7s ease-in-out, filter 1.7s ease-in-out;
+}
+
+/* 크기 · 깜빡이는 시간 · 시작 박자를 하나씩 다르게 */
+.s1 {
+  width: 12px;
+  height: 12px;
+  animation-duration: 2.5s;
+  animation-delay: -0.5s;
+}
+.s2 {
+  width: 14px;
+  height: 14px;
+  animation-duration: 2.9s;
+  animation-delay: -1.2s;
+}
+.s3 {
+  width: 16px;
+  height: 16px;
+  animation-duration: 3.3s;
+  animation-delay: -2s;
+}
+.s4 {
+  width: 18px;
+  height: 18px;
+  animation-duration: 3.8s;
+  animation-delay: -0.8s;
+}
+.s5 {
+  width: 20px;
+  height: 20px;
+  animation-duration: 4.4s;
+  animation-delay: -1.6s;
+}
+
+/* 깜빡임 : 어둡고 작게 → 밝고 크게 → 다시 어둡게 */
+@keyframes blink {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+}
+
+/* 떠다님 : 제자리 → 오른쪽 위 → 위 → 왼쪽 위 → 제자리 */
+@keyframes float {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  25% {
+    transform: translate(15px, -20px);
+  }
+  50% {
+    transform: translate(0px, -10px);
+  }
+  75% {
+    transform: translate(-15px, -20px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+/* ---------- 합쳐짐 : 클릭하면 하나로 (다시 클릭하면 5개로) ---------- */
+
+/* 한 점으로 모이는 속도 · 따라오는 속도 : 다 같이 1.2초 */
+.poster.together .firefly-gather {
+  transition-duration: 1.2s;
+}
+
+/* 크고 흐린 빛 하나로 (깜빡임 · 떠다님은 그대로 둬서 바뀌는 순간 튀지 않게) */
+.poster.together .firefly {
+  width: 80px;
+  height: 80px;
+  filter: blur(20px);
+}
+
+/* 뭉쳤을 때 : 제목에 반딧불 빛이 은은하게 번짐 */
+.poster.together .title {
+  text-shadow: 0px 0px 12px #f4e27a, 0px 0px 30px #f4e27a;
+}
+
+/* 움직임 줄이기 설정을 켠 사람 : 움직임 없이 은은한 빛만 */
+@media (prefers-reduced-motion: reduce) {
+  .firefly-float,
+  .firefly {
+    animation: none;
+  }
+  .firefly {
+    opacity: 0.8;
+  }
+  .firefly-gather {
+    transition: none;
+  }
+}
